@@ -1,9 +1,12 @@
 ﻿<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Frame Smooth Camera Movement</title>
+    <!-- Include A-Frame 1.6.0 -->
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="cameraMovement.js"></script> <!-- Link the external JS file -->
+    <!-- Link the external JavaScript file for camera movement -->
 
-    <title></title>
 </head>
 <body>
 <a-scene>
@@ -25,6 +28,27 @@
     <a-camera id="camera" position="0 1.6 3"></a-camera>
 
 </a-scene>
+
+<script>
+    const camera = document.getElementById('camera');
+    const moveDistance = 0.5; // Distance to move per key press
+
+    window.addEventListener('keydown', function(event) {
+        let position = camera.getAttribute('position');
+
+        // Move up with E key
+        if (event.key === 'e') {
+            position.y += moveDistance;
+            camera.setAttribute('position', position);
+        }
+
+        // Move down with Q key
+        if (event.key === 'q') {
+            position.y -= moveDistance;
+            camera.setAttribute('position', position);
+        }
+    });
+</script>
 
 </body>
 </html>
