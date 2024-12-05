@@ -2,9 +2,20 @@
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/loaders/GLTFLoader.js';
 import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/webxr/ARButton.js';
 
+import { moveCamera } from './cameraMovement.js';
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'q') moveCamera(camera, 'up', moveDistance);
+    if (event.key === 'e') moveCamera(camera, 'down', moveDistance);
+});
+
 let camera, scene, renderer;
 let controller;
 
+let moveDistance = 0.5; // Default distance to move per key press
+const speedIncrement = 0.1; // How much the speed changes per scroll
+
+// Initialize the scene and camera
 init();
 animate();
 
@@ -41,8 +52,12 @@ function init() {
     controller = renderer.xr.getController(0);
     controller.addEventListener('select', onSelect);
     scene.add(controller);
+
+    // Listen for mouse wheel to adjust speed
+    window.addEventListener('wheel', handleScroll);
 }
 
+// Function to create social media buttons
 function createSocialButtons() {
     const buttonData = [
         { label: 'GitHub', link: 'https://github.com/yourusername' },
@@ -58,6 +73,7 @@ function createSocialButtons() {
     });
 }
 
+// Function to create 3D buttons
 function create3DButton(label) {
     const geometry = new THREE.PlaneGeometry(0.3, 0.1);
     const material = new THREE.MeshBasicMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
@@ -79,6 +95,7 @@ function create3DButton(label) {
     return button;
 }
 
+// Function for selecting links on button press
 function onSelect() {
     const intersection = controller.intersectObject(scene.children, true)[0];
     if (intersection && intersection.object.userData.link) {
@@ -86,6 +103,19 @@ function onSelect() {
     }
 }
 
+// Handle scroll input to adjust speed
+function handleScroll(event) {
+    if (event.deltaY > 0) {
+        // Scroll down (decrease move distance)
+        moveDistance = Math.max(0.1, moveDistance - speedIncrement); // Prevent moveDistance from going below 0.1
+    } else {
+        // Scroll up (increase move distance)
+        moveDistance += speedIncrement;
+    }
+    console.log(`Move Distance: ${moveDistance}`); // Output the current move distance to the console for debugging
+}
+
+// Smoothly animate the scene (render loop)
 function animate() {
     renderer.setAnimationLoop(() => {
         renderer.render(scene, camera);
