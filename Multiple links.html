@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Parts of GLB Model</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+</head>
+<body>
+<a-scene>
+    <!-- Load the GLB model -->
+    <a-entity
+            id="model"
+            gltf-model="#myModel"
+            position="0 0 -5"></a-entity>
+
+    <!-- Camera and cursor -->
+    <a-camera position="0 1.6 0">
+        <a-cursor color="yellow"></a-cursor>
+    </a-camera>
+</a-scene>
+
+<script>
+    // Once the scene is loaded
+    document.querySelector('#model').addEventListener('model-loaded', (event) => {
+        const model = event.detail.model; // Access the Three.js Object3D
+
+        // Find specific submeshes by their names or index
+        const part1 = model.getObjectByName('SubMeshName1'); // Replace with actual mesh name
+        const part2 = model.getObjectByName('SubMeshName2'); // Replace with actual mesh name
+
+        // Add event listeners to submeshes
+        if (part1) {
+            part1.userData = { url: 'https://link1.com' }; // Store link data
+            part1.addEventListener('click', () => {
+                window.open(part1.userData.url, '_blank');
+            });
+        }
+
+        if (part2) {
+            part2.userData = { url: 'https://link2.com' }; // Store link data
+            part2.addEventListener('click', () => {
+                window.open(part2.userData.url, '_blank');
+            });
+        }
+    });
+</script>
+</body>
+</html>

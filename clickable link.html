@@ -1,0 +1,29 @@
+﻿<a-scene>
+    <a-assets>
+        <a-asset-item id="model" src="path/to/your/model.glb"></a-asset-item>
+    </a-assets>
+
+    <a-entity gltf-model="#model" id="interactive-model"></a-entity>
+</a-scene>
+
+<script>
+    // JavaScript to assign unique click events
+    document.querySelector('#interactive-model').addEventListener('model-loaded', (event) => {
+        const model = event.detail.model; // Access the loaded 3D object
+        const part1 = model.getObjectByName('ObjectName1'); // Replace with your part's name
+        const part2 = model.getObjectByName('ObjectName2'); // Replace with your part's name
+
+        // Assign click events to each part
+        if (part1) {
+            part1.addEventListener('click', () => {
+                console.log('Part 1 clicked!');
+            });
+        }
+
+        if (part2) {
+            part2.addEventListener('click', () => {
+                console.log('Part 2 clicked!');
+            });
+        }
+    });
+</script>
