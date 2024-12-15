@@ -44,7 +44,12 @@ Here are some ideas for how to structure your portfolio:
 ## Contributions
 
 Contributions and feedback are welcome! Feel free to fork this repository and submit pull requests to add features or improve the experience.
-
+Website
+https://nathenwilliams600.wixsite.com/nategamedev
+LinkedIn
+[in/nathenwilliams](https://www.linkedin.com/in/nathenwilliams/)
+Artstation
+https://www.artstation.com/happilytwisted
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
